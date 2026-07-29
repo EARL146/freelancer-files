@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Earl Brew & Cafe  — Small-Batch Coffee Roasters</title>
+<meta name="description" content="Earl Brew & Cafe  — single-origin beans, roasted weekly, poured with care. Visit our café for espresso, latte art, cold brew and fresh pastries.">
+<meta name="keywords" content="coffee shop, roastery, espresso, latte, cold brew, cafe">
+
+<!-- Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,500;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,500&family=Work+Sans:wght@300;400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+
+<!-- Tailwind (CDN, utility-only, no build step) -->
+<script src="https://cdn.tailwindcss.com"></script>
+<script>
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          espresso: '#17110D',
+          espresso2: '#241A12',
+          cream: '#F3EAD8',
+          offwhite: '#FFFBF5',
+          roast: '#6B4226',
+          copper: '#C1652F',
+          copperlight: '#E08A52',
+          gold: '#C9A24B',
+        },
+        fontFamily: {
+          display: ['Fraunces', 'serif'],
+          body: ['"Work Sans"', 'sans-serif'],
+          mono: ['"Space Mono"', 'monospace'],
+        },
+      },
+    },
+  };
+</script>
+
+<style>
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Work Sans', sans-serif; background-color: #F3EAD8; }
+
+  /* subtle paper grain texture overlay */
+  .grain {
+    position: relative;
+  }
+  .grain::before {
+    content: "";
+    position: absolute; inset: 0;
+    pointer-events: none;
+    opacity: 0.05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* reveal-on-scroll */
+  .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .reveal.in-view { opacity: 1; transform: translateY(0); }
+  .reveal-scale { opacity: 0; transform: scale(0.94); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .reveal-scale.in-view { opacity: 1; transform: scale(1); }
+
+  @media (prefers-reduced-motion: reduce) {
+    .reveal, .reveal-scale { opacity: 1 !important; transform: none !important; transition: none !important; }
+    html { scroll-behavior: auto; }
+  }
+
+  /* stamp badge — the signature motif, reused across the page */
+  .stamp {
+    border: 1.5px dashed currentColor;
+    border-radius: 9999px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Space Mono', monospace;
+    letter-spacing: 0.08em;
+  }
+
+  /* marquee ticker */
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee 28s linear infinite;
+  }
+  @keyframes marquee {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+
+  /* steam animation for hero */
+  .steam-path {
+    stroke-dasharray: 300;
+    stroke-dashoffset: 300;
+    animation: steam 5s ease-in-out infinite;
+  }
+  .steam-path.d2 { animation-delay: 1s; }
+  .steam-path.d3 { animation-delay: 2s; }
+  @keyframes steam {
+    0% { stroke-dashoffset: 300; opacity: 0; }
+    15% { opacity: 0.5; }
+    60% { opacity: 0.35; }
+    100% { stroke-dashoffset: 0; opacity: 0; }
+  }
+
+  /* image fallback (used via JS onerror) */
+  .img-fallback {
+    background: linear-gradient(135deg, #6B4226, #C1652F 60%, #C9A24B);
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  /* custom underline hover for nav links */
+  .nav-link { position: relative; }
+  .nav-link::after {
+    content: ""; position: absolute; left: 0; bottom: -4px;
+    width: 0; height: 1px; background: currentColor;
+    transition: width 0.3s ease;
+  }
+  .nav-link:hover::after { width: 100%; }
+
+  .menu-card:hover .menu-card-img { transform: scale(1.08); }
+  .menu-card-img { transition: transform 0.6s ease; }
+
+  ::selection { background: #C1652F; color: #FFFBF5; }
+
+  /* focus visibility for accessibility */
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid #C1652F; outline-offset: 3px;
+  }
+
+  /* scrollbar */
+  ::-webkit-scrollbar { width: 10px; }
+  ::-webkit-scrollbar-track { background: #F3EAD8; }
+  ::-webkit-scrollbar-thumb { background: #6B4226; border-radius: 8px; }
+</style>
+</head>
+
+<body class="bg-cream text-espresso antialiased">
+
+<!-- ============ SKIP LINK ============ -->
+<a href="#main" class="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:bg-copper focus:text-white focus:px-4 focus:py-2 focus:rounded-full focus:z-[100]">Skip to content</a>
+
+<!-- ============ NAVBAR ============ -->
+<header id="navbar" class="fixed top-0 inset-x-0 z-50 transition-all duration-500">
+  <nav class="max-w-7xl mx-auto flex items-center justify-between px-5 sm:px-8 py-4">
+
+    <!-- Logo: stamp badge -->
+    <a href="#home" class="flex items-center gap-3 group" aria-label="Earl Brew & Cafe  home">
+      <span id="logoStamp" class="stamp w-11 h-11 shrink-0 text-cream border-cream/70 flex-col leading-none transition-colors duration-500">
+        <span class="text-[9px] tracking-widest -mb-0.5">E&amp;O</span>
+        <span class="text-[6px]">EST 16</span>
+      </span>
+      <span id="logoText" class="font-display font-semibold text-lg sm:text-xl tracking-wide text-cream transition-colors duration-500">Earl Brew & Cafe </span>
+    </a>
+
+    <!-- Desktop links -->
+    <ul id="navLinks" class="hidden md:flex items-center gap-9 font-body text-sm tracking-wide text-cream/90 transition-colors duration-500">
+      <li><a href="#home" class="nav-link">Home</a></li>
+      <li><a href="#about" class="nav-link">About</a></li>
+      <li><a href="#menu" class="nav-link">Menu</a></li>
+      <li><a href="#gallery" class="nav-link">Gallery</a></li>
+      <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+      <li><a href="#contact" class="nav-link">Contact</a></li>
+    </ul>
+
+    <a href="#contact" id="navCta" class="hidden md:inline-flex items-center gap-2 border border-cream/60 text-cream text-xs font-mono tracking-widest uppercase px-5 py-2.5 rounded-full hover:bg-cream hover:text-espresso transition-colors duration-300">
+      Visit Us
+    </a>
+
+    <!-- Mobile hamburger -->
+    <button id="menuBtn" aria-label="Open menu" aria-expanded="false" class="md:hidden text-cream w-10 h-10 flex flex-col items-center justify-center gap-1.5 relative z-50">
+      <span class="hamburger-line block w-6 h-[1.5px] bg-current transition-all duration-300"></span>
+      <span class="hamburger-line block w-6 h-[1.5px] bg-current transition-all duration-300"></span>
+      <span class="hamburger-line block w-4 h-[1.5px] bg-current transition-all duration-300 self-end"></span>
+    </button>
+  </nav>
+
+  <!-- Mobile menu panel -->
+  <div id="mobileMenu" class="md:hidden fixed inset-0 top-0 bg-espresso/98 backdrop-blur-sm z-40 flex flex-col items-center justify-center gap-8 font-display text-2xl text-cream transition-all duration-500 opacity-0 pointer-events-none -translate-y-4">
+    <a href="#home" class="mobile-link">Home</a>
+    <a href="#about" class="mobile-link">About</a>
+    <a href="#menu" class="mobile-link">Menu</a>
+    <a href="#gallery" class="mobile-link">Gallery</a>
+    <a href="#testimonials" class="mobile-link">Testimonials</a>
+    <a href="#contact" class="mobile-link">Contact</a>
+  </div>
+</header>
+
+<main id="main">
+
+<!-- ============ HERO ============ -->
+<section id="home" class="relative min-h-screen flex items-end sm:items-center overflow-hidden bg-espresso grain">
+
+  <img
+    src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?auto=format&fit=crop&w=1920&q=80"
+    onerror="this.onerror=null;this.classList.add('img-fallback');this.removeAttribute('src');"
+    alt="Warm, dimly lit coffee shop interior with a cup of latte art on a wooden table"
+    class="absolute inset-0 w-full h-full object-cover opacity-50">
+  <div class="absolute inset-0 bg-gradient-to-t from-espresso via-espresso/70 to-espresso/40"></div>
+  <div class="absolute inset-0 bg-gradient-to-r from-espresso/80 via-transparent to-espresso/50"></div>
+
+  <!-- decorative steam lines -->
+  <svg class="hidden sm:block absolute right-[12%] top-[18%] w-24 h-40 text-copperlight/60" viewBox="0 0 60 140" fill="none">
+    <path class="steam-path" d="M15 130 C 5 110, 25 100, 15 80 C 5 60, 25 50, 15 30 C 5 15, 20 10, 18 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+    <path class="steam-path d2" d="M35 130 C 25 110, 45 100, 35 80 C 25 60, 45 50, 35 30 C 25 15, 40 10, 38 2" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/>
+  </svg>
+
+  <div class="relative z-10 max-w-7xl mx-auto px-5 sm:px-8 pb-16 sm:pb-0 pt-32 sm:pt-0 w-full">
+    <p class="reveal font-mono text-copperlight text-xs sm:text-sm tracking-[0.3em] uppercase mb-5">
+      Single-Origin &middot; Roasted Weekly &middot; Since 2026
+    </p>
+    <h1 class="reveal font-display text-cream leading-[1.05] text-4xl sm:text-6xl lg:text-7xl font-medium max-w-3xl">
+      Crafted with <span class="italic text-copperlight">Passion</span>,<br> Brewed to Perfection
+    </h1>
+    <p class="reveal font-body text-cream/75 text-base sm:text-lg max-w-xl mt-6 leading-relaxed">
+      From bean to cup, every pour at Earl Brew &amp; Cafe is a small ritual — house-roasted beans, hand-poured art, and a room that feels like coming home.
+    </p>
+
+    <div class="reveal flex flex-col sm:flex-row gap-4 mt-10">
+      <a href="#menu" class="text-center bg-copper hover:bg-copperlight text-offwhite font-body font-medium px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-copper/30 hover:-translate-y-0.5">
+        View Menu
+      </a>
+      <a href="#contact" class="text-center border border-cream/40 text-cream font-body font-medium px-8 py-4 rounded-full transition-all duration-300 hover:bg-cream/10 hover:border-cream">
+        Visit Us
+      </a>
+    </div>
+  </div>
+
+  <!-- scroll cue -->
+  <a href="#about" aria-label="Scroll to About section" class="hidden sm:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-2 text-cream/60 hover:text-cream transition-colors">
+    <span class="font-mono text-[10px] tracking-widest">SCROLL</span>
+    <span class="w-px h-10 bg-current animate-pulse"></span>
+  </a>
+</section>
+
+<!-- ============ TICKER ============ -->
+<div class="bg-copper text-offwhite overflow-hidden py-3 border-y border-copperlight/40">
+  <div class="marquee-track font-mono text-xs sm:text-sm tracking-[0.25em] uppercase">
+    <span class="flex items-center gap-6 pr-6">
+      <span>Ethiopia Yirgacheffe</span><span aria-hidden="true">&#9679;</span>
+      <span>Colombia Huila</span><span aria-hidden="true">&#9679;</span>
+      <span>Roasted Every Tuesday</span><span aria-hidden="true">&#9679;</span>
+      <span>Hand-Poured Daily</span><span aria-hidden="true">&#9679;</span>
+      <span>Sumatra Mandheling</span><span aria-hidden="true">&#9679;</span>
+    </span>
+    <span class="flex items-center gap-6 pr-6" aria-hidden="true">
+      <span>Ethiopia Yirgacheffe</span><span>&#9679;</span>
+      <span>Colombia Huila</span><span>&#9679;</span>
+      <span>Roasted Every Tuesday</span><span>&#9679;</span>
+      <span>Hand-Poured Daily</span><span>&#9679;</span>
+      <span>Sumatra Mandheling</span><span>&#9679;</span>
+    </span>
+  </div>
+</div>
+
+<!-- ============ ABOUT ============ -->
+<section id="about" class="bg-cream py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8 grid md:grid-cols-2 gap-14 items-center">
+
+    <div class="reveal relative order-2 md:order-1">
+      <div class="absolute -top-6 -left-6 w-full h-full border border-roast/30 rounded-2xl hidden sm:block"></div>
+      <img
+        src="beans.webp"
+        onerror="this.onerror=null;this.classList.add('img-fallback');this.removeAttribute('src');"
+        alt="Barista hand-pouring latte art into a ceramic cup at the counter"
+        loading="lazy"
+        class="relative rounded-2xl shadow-2xl w-full h-[420px] sm:h-[480px] object-cover">
+      <div class="stamp absolute -bottom-6 -right-4 sm:-right-8 w-24 h-24 sm:w-28 sm:h-28 bg-offwhite text-roast border-roast/50 flex-col leading-none rotate-[-8deg] shadow-xl">
+        <span class="text-[10px] sm:text-xs tracking-widest">P-2</span>
+        <span class="text-lg sm:text-xl font-bold">2026</span>
+        <span class="text-[7px] sm:text-[8px] tracking-widest mt-0.5">Compostela, Davao de Oro</span>
+      </div>
+    </div>
+
+    <div class="order-1 md:order-2">
+      <p class="reveal font-mono text-copper text-xs tracking-[0.3em] uppercase mb-4">Our Story</p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-espresso leading-tight">
+        A small roaster with a big obsession for the perfect cup
+      </h2>
+      <p class="reveal font-body text-roast/90 leading-relaxed mt-6">
+        Earl Brew &amp; Cafe started in 2026 as a single drum roaster tucked behind a hardware store, run by two friends who couldn't agree on anything except that most coffee wasn't good enough. A decade later, that same stubborn standard shapes every bag we roast and every cup we pour.
+      </p>
+      <p class="reveal font-body text-roast/90 leading-relaxed mt-4">
+        We source direct from smallholder farms, roast in small batches every week, and train every barista by hand — because we believe coffee is at its best when it's made slowly, by people who care.
+      </p>
+
+      <div class="reveal grid grid-cols-3 gap-6 mt-10 pt-8 border-t border-roast/20">
+        <div>
+          <p class="font-display text-3xl sm:text-4xl text-copper font-semibold">10+</p>
+          <p class="font-mono text-[11px] tracking-wide text-roast/70 uppercase mt-1">Years Roasting</p>
+        </div>
+        <div>
+          <p class="font-display text-3xl sm:text-4xl text-copper font-semibold">12</p>
+          <p class="font-mono text-[11px] tracking-wide text-roast/70 uppercase mt-1">Origin Partners</p>
+        </div>
+        <div>
+          <p class="font-display text-3xl sm:text-4xl text-copper font-semibold">40k+</p>
+          <p class="font-mono text-[11px] tracking-wide text-roast/70 uppercase mt-1">Cups a Year</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ MENU ============ -->
+<section id="menu" class="bg-espresso grain py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="reveal font-mono text-copperlight text-xs tracking-[0.3em] uppercase mb-4">The Menu</p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-cream">Featured Coffee</h2>
+      <p class="reveal font-body text-cream/60 mt-4">Eight ways to start your day, each one roasted, ground, and pulled to order.</p>
+    </div>
+
+    <div id="menuGrid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      <!-- cards injected by JS from MENU_ITEMS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ GALLERY ============ -->
+<section id="gallery" class="bg-cream py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <p class="reveal font-mono text-copper text-xs tracking-[0.3em] uppercase mb-4">Inside Earl Brew &amp; Cafe </p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-espresso">A Look Around</h2>
+    </div>
+
+    <div id="galleryGrid" class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 auto-rows-[140px] sm:auto-rows-[180px]">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ WHY CHOOSE US ============ -->
+<section class="bg-roast py-24 sm:py-32 relative overflow-hidden">
+  <div class="absolute inset-0 opacity-[0.06] bg-[radial-gradient(circle_at_20%_20%,white,transparent_35%),radial-gradient(circle_at_80%_70%,white,transparent_35%)]"></div>
+  <div class="relative max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="reveal font-mono text-gold text-xs tracking-[0.3em] uppercase mb-4">Why Earl Brew &amp; Cafe</p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-cream">Why Choose Us</h2>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+
+      <div class="reveal-scale bg-espresso2/60 border border-cream/10 rounded-2xl p-8 hover:border-copperlight/50 hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 rounded-full border border-copperlight/60 flex items-center justify-center mb-6 text-copperlight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 10c0-3.3 3.6-6 8-6s8 2.7 8 6-3.6 6-8 6-8-2.7-8-6Z"/><path d="M12 16v5"/><path d="M8 21h8"/></svg>
+        </div>
+        <h3 class="font-display text-xl text-cream mb-2">Premium Beans</h3>
+        <p class="font-body text-cream/60 text-sm leading-relaxed">Sourced direct from farms we know by name, at the top of each origin's harvest.</p>
+      </div>
+
+      <div class="reveal-scale bg-espresso2/60 border border-cream/10 rounded-2xl p-8 hover:border-copperlight/50 hover:-translate-y-1 transition-all duration-300 sm:mt-6">
+        <div class="w-12 h-12 rounded-full border border-copperlight/60 flex items-center justify-center mb-6 text-copperlight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2v6"/><path d="M6 12c0 4 2.5 9 6 9s6-5 6-9"/><path d="M6 12c0-1.5 2.5-2 6-2s6 .5 6 2"/></svg>
+        </div>
+        <h3 class="font-display text-xl text-cream mb-2">Fresh Ingredients</h3>
+        <p class="font-body text-cream/60 text-sm leading-relaxed">Milk, syrups and pastries delivered daily — nothing sits on our shelf for long.</p>
+      </div>
+
+      <div class="reveal-scale bg-espresso2/60 border border-cream/10 rounded-2xl p-8 hover:border-copperlight/50 hover:-translate-y-1 transition-all duration-300">
+        <div class="w-12 h-12 rounded-full border border-copperlight/60 flex items-center justify-center mb-6 text-copperlight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-7 8-7s8 3 8 7"/></svg>
+        </div>
+        <h3 class="font-display text-xl text-cream mb-2">Professional Baristas</h3>
+        <p class="font-body text-cream/60 text-sm leading-relaxed">Trained in-house for months before they ever pull a shot for a guest.</p>
+      </div>
+
+      <div class="reveal-scale bg-espresso2/60 border border-cream/10 rounded-2xl p-8 hover:border-copperlight/50 hover:-translate-y-1 transition-all duration-300 sm:mt-6">
+        <div class="w-12 h-12 rounded-full border border-copperlight/60 flex items-center justify-center mb-6 text-copperlight">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12h18"/><path d="M5 12V7a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2v5"/><path d="M4 12v7"/><path d="M20 12v7"/><path d="M8 19v2"/><path d="M16 19v2"/></svg>
+        </div>
+        <h3 class="font-display text-xl text-cream mb-2">Cozy Atmosphere</h3>
+        <p class="font-body text-cream/60 text-sm leading-relaxed">Warm light, worn wood, and playlists built for lingering over one more cup.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ TESTIMONIALS ============ -->
+<section id="testimonials" class="bg-cream py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="reveal font-mono text-copper text-xs tracking-[0.3em] uppercase mb-4">Kind Words</p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-espresso">What Our Guests Say</h2>
+    </div>
+
+    <div id="testimonialGrid" class="grid md:grid-cols-3 gap-6">
+      <!-- injected by JS -->
+    </div>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<section id="contact" class="bg-espresso grain py-24 sm:py-32">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <p class="reveal font-mono text-copperlight text-xs tracking-[0.3em] uppercase mb-4">Find Us</p>
+      <h2 class="reveal font-display text-3xl sm:text-4xl lg:text-5xl font-medium text-cream">Come Say Hello</h2>
+    </div>
+
+    <div class="grid lg:grid-cols-5 gap-8">
+
+      <div class="reveal lg:col-span-2 bg-espresso2/70 border border-cream/10 rounded-2xl p-8 sm:p-10 flex flex-col gap-8">
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 shrink-0 rounded-full border border-copperlight/60 flex items-center justify-center text-copperlight">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 22s-8-7.2-8-13a8 8 0 0 1 16 0c0 5.8-8 13-8 13Z"/><circle cx="12" cy="9" r="3"/></svg>
+          </div>
+          <div>
+            <p class="font-body font-medium text-cream">Address</p>
+            <p class="font-body text-cream/60 text-sm mt-1">P-2,<br>Compostela,Davao de oro</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 shrink-0 rounded-full border border-copperlight/60 flex items-center justify-center text-copperlight">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 3a2 2 0 0 1-.5 2.1L8 10.1a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c1 .3 2 .5 3 .7a2 2 0 0 1 1.6 2Z"/></svg>
+          </div>
+          <div>
+            <p class="font-body font-medium text-cream">Phone</p>
+            <p class="font-body text-cream/60 text-sm mt-1">+63 917 000 1234</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 shrink-0 rounded-full border border-copperlight/60 flex items-center justify-center text-copperlight">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 6-10 7L2 6"/></svg>
+          </div>
+          <div>
+            <p class="font-body font-medium text-cream">Email</p>
+            <p class="font-body text-cream/60 text-sm mt-1">hello@EarlBrewCafe.coffee</p>
+          </div>
+        </div>
+
+        <div class="flex gap-4">
+          <div class="w-10 h-10 shrink-0 rounded-full border border-copperlight/60 flex items-center justify-center text-copperlight">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
+          </div>
+          <div>
+            <p class="font-body font-medium text-cream">Opening Hours</p>
+            <p class="font-body text-cream/60 text-sm mt-1">Mon – Fri &nbsp;7:00 AM – 9:00 PM<br>Sat – Sun &nbsp;7:00 AM – 10:00 PM</p>
+          </div>
+        </div>
+
+        <a href="mailto:hello@EarlBrewCafe.coffee" class="mt-2 text-center bg-copper hover:bg-copperlight text-offwhite font-body font-medium px-8 py-4 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-copper/30">
+          Get In Touch
+        </a>
+      </div>
+
+      <div class="reveal lg:col-span-3 rounded-2xl overflow-hidden border border-cream/10 min-h-[420px]">
+        <iframe
+          title="Earl Brew &amp; Cafe location map"
+          src="https://www.google.com/maps?q=Poblacion,Makati,Metro+Manila&output=embed"
+          class="w-full h-full min-h-[420px] grayscale-[40%] contrast-[1.1]"
+          style="border:0;"
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade">
+        </iframe>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="bg-[#0F0B08] text-cream/70 pt-20 pb-8">
+  <div class="max-w-7xl mx-auto px-5 sm:px-8">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-12 pb-14 border-b border-cream/10">
+
+      <div>
+        <div class="flex items-center gap-3 mb-4">
+          <span class="stamp w-10 h-10 shrink-0 text-cream border-cream/50 flex-col leading-none">
+            <span class="text-[8px] tracking-widest -mb-0.5">E&amp;O</span>
+            <span class="text-[5.5px]">EST 16</span>
+          </span>
+          <span class="font-display font-semibold text-lg text-cream">Earl Brew &amp; Cafe</span>
+        </div>
+        <p class="font-body text-sm leading-relaxed max-w-xs">Small-batch coffee, roasted weekly and poured with care in the heart of Compostela,Davao de oro.</p>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-xs tracking-[0.25em] uppercase text-copperlight mb-5">Quick Links</h4>
+        <ul class="space-y-3 font-body text-sm">
+          <li><a href="#home" class="hover:text-cream transition-colors">Home</a></li>
+          <li><a href="#about" class="hover:text-cream transition-colors">About</a></li>
+          <li><a href="#menu" class="hover:text-cream transition-colors">Menu</a></li>
+          <li><a href="#gallery" class="hover:text-cream transition-colors">Gallery</a></li>
+          <li><a href="#testimonials" class="hover:text-cream transition-colors">Testimonials</a></li>
+          <li><a href="#contact" class="hover:text-cream transition-colors">Contact</a></li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-xs tracking-[0.25em] uppercase text-copperlight mb-5">Visit</h4>
+        <ul class="space-y-3 font-body text-sm">
+          <li>P-2, Compostela</li>
+          <li>Davao de oro</li>
+          <li>+63 917 000 1234</li>
+          <li>hello@earlbrewcafe.coffee</li>
+        </ul>
+      </div>
+
+      <div>
+        <h4 class="font-mono text-xs tracking-[0.25em] uppercase text-copperlight mb-5">Follow Along</h4>
+        <div class="flex gap-3">
+          <a href="#" aria-label="Instagram" class="w-10 h-10 rounded-full border border-cream/20 flex items-center justify-center hover:bg-copper hover:border-copper transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1"/></svg>
+          </a>
+          <a href="#" aria-label="Facebook" class="w-10 h-10 rounded-full border border-cream/20 flex items-center justify-center hover:bg-copper hover:border-copper transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 9h3V6h-3a4 4 0 0 0-4 4v2H8v3h2v6h3v-6h3l1-3h-4v-2a1 1 0 0 1 1-1Z"/></svg>
+          </a>
+          <a href="#" aria-label="Twitter / X" class="w-10 h-10 rounded-full border border-cream/20 flex items-center justify-center hover:bg-copper hover:border-copper transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l16 16M20 4 4 20"/></svg>
+          </a>
+          <a href="#" aria-label="TikTok" class="w-10 h-10 rounded-full border border-cream/20 flex items-center justify-center hover:bg-copper hover:border-copper transition-colors">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 3v10.5a3.5 3.5 0 1 1-3-3.46"/><path d="M14 3c.5 3 2.5 5 6 5.5"/></svg>
+          </a>
+        </div>
+      </div>
+    </div>
+
+    <div class="pt-8 flex flex-col sm:flex-row gap-4 items-center justify-between font-mono text-[11px] tracking-wide text-cream/40">
+      <p>&copy; <span id="year"></span> Earl Brew &amp; Cafe  Coffee Roasters. All rights reserved.</p>
+      <p>Made with care, one cup at a time.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- ============ BACK TO TOP ============ -->
+<a href="#home" id="toTop" aria-label="Back to top" class="fixed bottom-6 right-6 z-40 w-11 h-11 rounded-full bg-copper text-offwhite flex items-center justify-center shadow-lg opacity-0 pointer-events-none translate-y-3 transition-all duration-300 hover:bg-copperlight">
+  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5"/><path d="m5 12 7-7 7 7"/></svg>
+</a>
+
+<script>
+(function () {
+  "use strict";
+
+  /* ---------- data ---------- */
+  const MENU_ITEMS = [
+    { name: "Espresso", desc: "A concentrated double shot, rich crema, bold finish.", price: "$3.25",
+      img: "photo-1510591509098-f4fdc6d0ff04", notes: ["Cocoa","Nutty","Bright"] },
+    { name: "Cappuccino", desc: "Equal parts espresso, steamed milk, and silky foam.", price: "$4.00",
+      img: "photo-1572442388796-11668a67e53d", notes: ["Creamy","Balanced","Warm"] },
+    { name: "Latte", desc: "Smooth espresso with steamed milk and light foam art.", price: "$4.25",
+      img: "photo-1541167760496-1628856ab772", notes: ["Milky","Soft","Sweet"] },
+    { name: "Americano", desc: "Espresso lengthened with hot water, clean and bold.", price: "$3.50",
+      img: "photo-1497935586351-b67a49e012bf", notes: ["Bold","Clean","Roasty"] },
+    { name: "Mocha", desc: "Espresso, steamed milk, and house dark chocolate.", price: "$4.75",
+      img: "photo-1579992357154-faf4bde95b3d", notes: ["Cocoa","Rich","Sweet"] },
+    { name: "Caramel Macchiato", desc: "Vanilla-marked espresso, milk, caramel drizzle.", price: "$4.95",
+      img: "photo-1509042239860-f550ce710b93", notes: ["Caramel","Vanilla","Silky"] },
+    { name: "Cold Brew", desc: "Steeped 18 hours for a smooth, low-acid finish.", price: "$4.50",
+      img: "photo-1517701550927-30cf4ba1dba5", notes: ["Smooth","Mellow","Dark"] },
+    { name: "Iced Coffee", desc: "Our house blend, brewed hot, served over ice.", price: "$3.95",
+      img: "photo-1461023058943-07fcbe16d735", notes: ["Crisp","Fruity","Light"] },
+  ];
+
+  const GALLERY_ITEMS = [
+    { img: "photo-1447933601403-0c6688de566e", alt: "Overhead shot of a coffee cup beside roasted beans", big: true },
+    { img: "photo-1442512595331-e89e73853f31", alt: "Close-up of freshly roasted coffee beans" },
+    { img: "photo-1495521821757-a1efb6729352", alt: "Sunlit café interior with wooden tables" },
+    { img: "photo-1504753793650-d4a2b783c15e", alt: "Barista pouring latte art into a cup" },
+    { img: "photo-1524350876685-274059332603", alt: "Cafe counter with pastries and coffee cups" },
+    { img: "photo-1506372023823-741c83b836fe", alt: "Cozy cafe interior with green plants" },
+    { img: "photo-1442550528053-c431ecb55509", alt: "Scattered coffee beans on a dark surface" },
+    { img: "photo-1509042239860-f550ce710b93", alt: "Heart-shaped latte art in a white cup", big: true },
+  ];
+
+  const TESTIMONIALS = [
+    { name: "Marga Santos", role: "Regular, Makati", rating: 5, avatar: "photo-1544005313-94ddf0286df2",
+      quote: "The cold brew here ruined every other coffee shop for me. It's the one place I actually look forward to on Monday mornings." },
+    { name: "Diego Reyes", role: "Freelance Designer", rating: 5, avatar: "photo-1500648767791-00dcc994a43e",
+      quote: "Great wifi, better coffee, and the baristas remember my order. Earl Brew & Cafe is basically my second office at this point." },
+    { name: "Anna Cruz", role: "Local Foodie", rating: 4, avatar: "photo-1438761681033-6461ffad8d80",
+      quote: "Their caramel macchiato is unreal, and the pastries sell out fast for a reason. Go early on weekends." },
+  ];
+
+  const UNS = (id, w, h) => `https://images.unsplash.com/${id}?auto=format&fit=crop&w=${w}&q=80` + (h ? `&h=${h}` : "");
+
+  function withFallback(imgTag) {
+    return imgTag.replace("<img", `<img onerror="this.onerror=null;this.classList.add('img-fallback');this.removeAttribute('src');this.insertAdjacentHTML('afterbegin','<svg width=32 height=32 viewBox=0 0 24 24 fill=none stroke=%23FFFBF5 stroke-width=1.3><path d=%22M3 8h13a3 3 0 0 1 0 6h-1%22/><path d=%22M3 8v7a3 3 0 0 0 3 3h6a3 3 0 0 0 3-3V8%22/><path d=%22M6 2v2M9 2v2M12 2v2%22/></svg>');"`);
+  }
+
+  /* ---------- render menu ---------- */
+  const menuGrid = document.getElementById("menuGrid");
+  menuGrid.innerHTML = MENU_ITEMS.map((item, i) => `
+    <article class="menu-card reveal-scale group bg-espresso2/60 border border-cream/10 rounded-2xl overflow-hidden hover:border-copperlight/50 transition-all duration-300 hover:-translate-y-1" style="transition-delay:${(i % 4) * 60}ms">
+      <div class="relative h-48 overflow-hidden">
+        ${withFallback(`<img src="${UNS(item.img, 600, 500)}" alt="${item.name} coffee in a cup" loading="lazy" class="menu-card-img w-full h-full object-cover">`)}
+        <div class="absolute inset-0 bg-gradient-to-t from-espresso2/80 to-transparent"></div>
+        <span class="absolute top-3 right-3 bg-espresso/80 backdrop-blur-sm text-copperlight font-mono text-xs px-3 py-1 rounded-full border border-copperlight/30">${item.price}</span>
+      </div>
+      <div class="p-5">
+        <h3 class="font-display text-xl text-cream mb-1.5">${item.name}</h3>
+        <p class="font-body text-cream/55 text-sm leading-relaxed mb-4">${item.desc}</p>
+
+        <!-- cupping-notes signature diagram -->
+        <div class="flex items-center gap-2 pt-3 border-t border-cream/10">
+          <svg width="26" height="26" viewBox="0 0 26 26" class="shrink-0 text-copperlight/70" fill="none">
+            <circle cx="13" cy="13" r="11" stroke="currentColor" stroke-width="0.8" stroke-dasharray="2 3"/>
+            <circle cx="13" cy="5" r="1.6" fill="currentColor"/>
+            <circle cx="20" cy="17" r="1.6" fill="currentColor"/>
+            <circle cx="6" cy="17" r="1.6" fill="currentColor"/>
+          </svg>
+          <p class="font-mono text-[10px] tracking-wider text-cream/45 uppercase">${item.notes.join(" &middot; ")}</p>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  /* ---------- render gallery ---------- */
+  const galleryGrid = document.getElementById("galleryGrid");
+  galleryGrid.innerHTML = GALLERY_ITEMS.map((g, i) => `
+    <div class="reveal-scale relative overflow-hidden rounded-xl group ${g.big ? "row-span-2" : ""}" style="transition-delay:${(i % 4) * 60}ms">
+      ${withFallback(`<img src="${UNS(g.img, 500, g.big ? 700 : 350)}" alt="${g.alt}" loading="lazy" class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110">`)}
+      <div class="absolute inset-0 bg-espresso/0 group-hover:bg-espresso/20 transition-colors duration-500"></div>
+    </div>
+  `).join("");
+
+  /* ---------- render testimonials ---------- */
+  const testimonialGrid = document.getElementById("testimonialGrid");
+  testimonialGrid.innerHTML = TESTIMONIALS.map((t, i) => `
+    <article class="reveal bg-offwhite border border-roast/10 rounded-2xl p-8 relative shadow-sm hover:shadow-xl transition-shadow duration-300" style="transition-delay:${i * 100}ms">
+      <span class="stamp absolute -top-4 -right-2 w-12 h-12 bg-copper text-offwhite border-offwhite/70 text-lg font-display italic rotate-[8deg] shadow-md">&ldquo;</span>
+      <div class="flex items-center gap-3 mb-5">
+        <div class="w-12 h-12 rounded-full overflow-hidden shrink-0 border-2 border-copper/30">
+          ${withFallback(`<img src="${UNS(t.avatar, 100, 100)}" alt="Portrait of ${t.name}" loading="lazy" class="w-full h-full object-cover">`)}
+        </div>
+        <div>
+          <p class="font-body font-semibold text-espresso text-sm">${t.name}</p>
+          <p class="font-mono text-[11px] text-roast/60">${t.role}</p>
+        </div>
+      </div>
+      <div class="flex gap-0.5 mb-3 text-gold">
+        ${Array.from({length:5}).map((_,s) => `
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="${s < t.rating ? 'currentColor' : 'none'}" stroke="currentColor" stroke-width="1.3"><path d="m12 3 2.6 5.9 6.4.6-4.8 4.3 1.4 6.3L12 17l-5.6 3.1 1.4-6.3-4.8-4.3 6.4-.6z"/></svg>
+        `).join("")}
+      </div>
+      <p class="font-body text-roast/85 text-sm leading-relaxed">&ldquo;${t.quote}&rdquo;</p>
+    </article>
+  `).join("");
+
+  document.getElementById("year").textContent = new Date().getFullYear();
+
+  /* ---------- sticky nav background on scroll ---------- */
+  const navbar = document.getElementById("navbar");
+  const logoText = document.getElementById("logoText");
+  const logoStamp = document.getElementById("logoStamp");
+  const navLinks = document.getElementById("navLinks");
+  const navCta = document.getElementById("navCta");
+  const menuBtn = document.getElementById("menuBtn");
+
+  function onScroll() {
+    const scrolled = window.scrollY > 60;
+    navbar.classList.toggle("bg-espresso/90", scrolled);
+    navbar.classList.toggle("backdrop-blur-md", scrolled);
+    navbar.classList.toggle("shadow-lg", scrolled);
+    navbar.classList.toggle("py-1", scrolled);
+
+    const toTop = document.getElementById("toTop");
+    if (window.scrollY > 700) {
+      toTop.classList.remove("opacity-0", "pointer-events-none", "translate-y-3");
+    } else {
+      toTop.classList.add("opacity-0", "pointer-events-none", "translate-y-3");
+    }
+  }
+  document.addEventListener("scroll", onScroll, { passive: true });
+  onScroll();
+
+  /* ---------- mobile menu toggle ---------- */
+  const mobileMenu = document.getElementById("mobileMenu");
+  const hamburgerLines = menuBtn.querySelectorAll(".hamburger-line");
+  let menuOpen = false;
+
+  function toggleMenu(force) {
+    menuOpen = typeof force === "boolean" ? force : !menuOpen;
+    menuBtn.setAttribute("aria-expanded", String(menuOpen));
+    if (menuOpen) {
+      mobileMenu.classList.remove("opacity-0", "pointer-events-none", "-translate-y-4");
+      document.body.style.overflow = "hidden";
+      hamburgerLines[0].style.transform = "translateY(6px) rotate(45deg)";
+      hamburgerLines[1].style.opacity = "0";
+      hamburgerLines[2].style.transform = "translateY(-6px) rotate(-45deg) translateX(0)";
+      hamburgerLines[2].classList.remove("w-4", "self-end");
+      hamburgerLines[2].classList.add("w-6");
+    } else {
+      mobileMenu.classList.add("opacity-0", "pointer-events-none", "-translate-y-4");
+      document.body.style.overflow = "";
+      hamburgerLines[0].style.transform = "";
+      hamburgerLines[1].style.opacity = "1";
+      hamburgerLines[2].style.transform = "";
+      hamburgerLines[2].classList.add("w-4", "self-end");
+      hamburgerLines[2].classList.remove("w-6");
+    }
+  }
+  menuBtn.addEventListener("click", () => toggleMenu());
+  mobileMenu.querySelectorAll(".mobile-link").forEach(link =>
+    link.addEventListener("click", () => toggleMenu(false))
+  );
+
+  /* ---------- scroll reveal animations ---------- */
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add("in-view");
+        io.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: "0px 0px -40px 0px" });
+
+  document.querySelectorAll(".reveal, .reveal-scale").forEach(el => io.observe(el));
+
+  /* ---------- smooth-scroll offset correction for sticky nav ---------- */
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener("click", function (e) {
+      const targetId = this.getAttribute("href");
+      if (targetId.length > 1) {
+        const target = document.querySelector(targetId);
+        if (target) {
+          e.preventDefault();
+          const y = target.getBoundingClientRect().top + window.scrollY - 70;
+          window.scrollTo({ top: y, behavior: "smooth" });
+        }
+      }
+    });
+  });
+})();
+</script>
+
+</body>
+</html>
