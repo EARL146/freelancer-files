@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://pharmacare.com/sitemap.xml
+
+# Delay for bots
+Crawl-delay: 1
