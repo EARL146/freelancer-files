@@ -10,7 +10,7 @@ const pharmacists = [
     position: 'Chief Pharmacist',
     experience: '15 years',
     certifications: 'PharmD, RPh, MBA',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop',
+    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
   {
     id: 2,
@@ -18,7 +18,7 @@ const pharmacists = [
     position: 'Clinical Pharmacist',
     experience: '12 years',
     certifications: 'PharmD, BCPS',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop',
+    image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
   {
     id: 3,
@@ -26,7 +26,7 @@ const pharmacists = [
     position: 'Speciality Pharmacist',
     experience: '10 years',
     certifications: 'PharmD, BPS',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop',
+    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
   {
     id: 4,
@@ -34,7 +34,7 @@ const pharmacists = [
     position: 'Consultant Pharmacist',
     experience: '18 years',
     certifications: 'PharmD, FASCP',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=400&h=400&fit=crop',
+    image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=400&h=400&fit=crop',
   },
 ];
 

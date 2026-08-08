@@ -169,8 +169,8 @@ export const Footer = () => {
             </div>
             <div>
               <p className="text-sm text-gray-400 mb-1">Visit Us</p>
-              <p className="text-white font-semibold">123 Health Street</p>
-              <p className="text-sm text-gray-400">New York, NY 10001</p>
+              <p className="text-white font-semibold">Compostela</p>
+              <p className="text-sm text-gray-400">Davao de Oro</p>
             </div>
           </div>
         </motion.div>
@@ -180,7 +180,7 @@ export const Footer = () => {
       <div className="border-t border-gray-800 py-8 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto flex flex-col md:flex-row justify-between items-center">
           <p className="text-gray-400 text-sm mb-4 md:mb-0">
-            © 2024 PharmaCare. All rights reserved.
+            © 2026 PharmaCare. All rights reserved.
           </p>
 
           <div className="flex gap-6">

@@ -51,7 +51,7 @@ export const Hero = () => {
       title: 'Aspirin 500mg',
       price: '$4.99',
       rating: '4.8',
-      image: 'https://images.unsplash.com/photo-1584308666744-24d5f400f6f0?w=150&h=150&fit=crop',
+      image: '/ASPIRIN.webp',
       delay: 0,
     },
     {
@@ -59,7 +59,7 @@ export const Hero = () => {
       title: 'Vitamin C Plus',
       price: '$7.99',
       rating: '4.9',
-      image: 'https://images.unsplash.com/photo-1550831855-83a5f6904405?w=150&h=150&fit=crop',
+      image: '/VITAMIN C.webp',
       delay: 0.2,
     },
     {
@@ -67,7 +67,7 @@ export const Hero = () => {
       title: 'Calcium Tablets',
       price: '$5.99',
       rating: '4.7',
-      image: 'https://images.unsplash.com/photo-1576961060910-bdf4ad55bb2a?w=150&h=150&fit=crop',
+      image: '/CALCIUM.webp',
       delay: 0.4,
     },
   ];
@@ -77,26 +77,16 @@ export const Hero = () => {
       id="home"
       className="relative w-full h-screen flex items-center justify-center overflow-hidden"
     >
-      {/* Video Background */}
+      {/* Image Background */}
       <div className="absolute inset-0 w-full h-full overflow-hidden">
-        <video
-          autoPlay
-          loop
-          muted
-          playsInline
-          className="absolute w-full h-full object-cover"
-        >
-          <source
-            src="https://videos.unsplash.com/output/jKN-W0zOeJI_hires.mp4?dl"
-            type="video/mp4"
-          />
-        </video>
+        <img
+          src="/gettyimages-2208764628-640x640.jpg"
+          alt="Pharmacy Background"
+          className="absolute w-full h-full object-cover object-center"
+        />
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black bg-opacity-40"></div>
+        <div className="absolute inset-0 bg-black/55"></div>
       </div>
-
-      {/* Animated Gradient Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-transparent via-transparent to-black/20 pointer-events-none"></div>
 
       {/* Content */}
       <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
@@ -184,65 +174,35 @@ export const Hero = () => {
           </motion.div>
 
           {/* Right Floating Cards */}
-          <div className="hidden lg:flex items-center justify-center relative h-screen lg:h-auto perspective" style={{ perspective: '1200px' }}>
-            <div className="relative w-full h-96">
+          <div className="hidden lg:flex items-center justify-center">
+            <div className="flex flex-col gap-4 w-72">
               {floatingCards.map((card) => (
                 <motion.div
                   key={card.id}
-                  initial={{ opacity: 0, y: 50, z: 0 }}
-                  animate={{ opacity: 1, y: 0, z: 0 }}
+                  initial={{ opacity: 0, x: 60 }}
+                  animate={{ opacity: 1, x: 0 }}
                   transition={{ delay: card.delay, duration: 0.8 }}
-                  whileHover={{
-                    y: -30,
-                    z: 50,
-                    boxShadow: '0 50px 100px rgba(0, 0, 0, 0.4)',
-                    rotateY: 5,
-                    rotateX: -5,
-                  }}
-                  style={{
-                    transformStyle: 'preserve-3d',
-                    y: scrollY * (0.3 + card.delay),
-                  }}
-                  className="absolute glass dark:glass-dark p-4 rounded-2xl backdrop-blur-md border border-white/20 dark:border-white/10 shadow-glass hover:shadow-glass-dark transition-all duration-300"
-                  onMouseMove={(e) => {
-                    const rect = e.currentTarget.getBoundingClientRect();
-                    const x = e.clientX - rect.left;
-                    const y = e.clientY - rect.top;
-                    const rotateX = (y - rect.height / 2) * 0.1;
-                    const rotateY = (x - rect.width / 2) * 0.1;
-                    e.currentTarget.style.transform = `rotateX(${rotateX}deg) rotateY(${rotateY}deg)`;
-                  }}
-                  onMouseLeave={(e) => {
-                    e.currentTarget.style.transform = 'rotateX(0deg) rotateY(0deg)';
-                  }}
-                  style={{
-                    left: `${card.id === 1 ? 0 : card.id === 2 ? 'auto' : '-20px'}`,
-                    right: `${card.id === 2 ? '0' : 'auto'}`,
-                    top: `${card.id === 1 ? '0' : card.id === 2 ? '0' : '150px'}`,
-                  }}
+                  whileHover={{ scale: 1.03, boxShadow: '0 20px 40px rgba(0,0,0,0.3)' }}
+                  className="glass p-4 rounded-2xl backdrop-blur-md border border-white/20 shadow-lg flex items-center gap-4"
                 >
-                  <div className="w-28 h-28 rounded-xl overflow-hidden mb-3 bg-gray-200 dark:bg-gray-700 flex-shrink-0">
+                  <div className="w-20 h-20 rounded-xl overflow-hidden bg-gray-200 flex-shrink-0">
                     <img
                       src={card.image}
                       alt={card.title}
                       className="w-full h-full object-cover"
                       onError={(e) => {
-                        (e.target as HTMLImageElement).src = `https://via.placeholder.com/120?text=${card.title}`;
+                        (e.target as HTMLImageElement).src = `https://placehold.co/80x80?text=${card.title}`;
                       }}
                     />
                   </div>
-                  <h3 className="font-semibold text-white dark:text-gray-100 text-sm mb-2">
-                    {card.title}
-                  </h3>
-                  <div className="flex items-center justify-between">
-                    <span className="text-emerald-300 font-bold">
-                      {card.price}
-                    </span>
-                    <div className="flex items-center gap-1">
-                      <span className="text-yellow-400 text-xs">⭐</span>
-                      <span className="text-white dark:text-gray-100 text-xs">
-                        {card.rating}
-                      </span>
+                  <div className="flex-1">
+                    <h3 className="font-semibold text-white text-sm mb-1">{card.title}</h3>
+                    <div className="flex items-center justify-between">
+                      <span className="text-emerald-300 font-bold">{card.price}</span>
+                      <div className="flex items-center gap-1">
+                        <span className="text-yellow-400 text-xs">⭐</span>
+                        <span className="text-white text-xs">{card.rating}</span>
+                      </div>
                     </div>
                   </div>
                 </motion.div>

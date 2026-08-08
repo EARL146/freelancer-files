@@ -13,7 +13,7 @@ const testimonials = [
     rating: 5,
     content:
       'PharmaCare has been a lifesaver for me. The delivery is always on time, and the staff is incredibly knowledgeable. Highly recommended!',
-    image: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&h=100&fit=crop',
+    image: 'https://images.pexels.com/photos/1239291/pexels-photo-1239291.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
   {
     id: 2,
@@ -22,7 +22,7 @@ const testimonials = [
     rating: 5,
     content:
       'Great experience shopping here. The prices are competitive, and I love the online consultation feature. Very convenient!',
-    image: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&h=100&fit=crop',
+    image: 'https://images.pexels.com/photos/220453/pexels-photo-220453.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
   {
     id: 3,
@@ -31,7 +31,7 @@ const testimonials = [
     rating: 5,
     content:
       'I recommend PharmaCare to my patients. They maintain excellent standards and always provide authentic medicines.',
-    image: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=100&h=100&fit=crop',
+    image: 'https://images.pexels.com/photos/774909/pexels-photo-774909.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
   {
     id: 4,
@@ -40,7 +40,7 @@ const testimonials = [
     rating: 4.8,
     content:
       'Easy to use website, fast delivery, and responsive customer service. Will definitely order again!',
-    image: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&h=100&fit=crop',
+    image: 'https://images.pexels.com/photos/1681010/pexels-photo-1681010.jpeg?auto=compress&cs=tinysrgb&w=100&h=100&fit=crop',
   },
 ];
 

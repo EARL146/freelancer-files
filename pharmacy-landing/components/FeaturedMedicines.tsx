@@ -11,7 +11,7 @@ const medicines = [
     category: 'Pain Relief',
     price: '$4.99',
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1584308666744-24d5f400f6f0?w=300&h=300&fit=crop',
+    image: '/ASPIRIN.webp',
     badge: 'Popular',
   },
   {
@@ -20,7 +20,7 @@ const medicines = [
     category: 'Vitamins',
     price: '$7.99',
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1550831855-83a5f6904405?w=300&h=300&fit=crop',
+    image: '/VITAMIN C.webp',
     badge: 'Best Seller',
   },
   {
@@ -29,7 +29,7 @@ const medicines = [
     category: 'Supplements',
     price: '$5.99',
     rating: 4.7,
-    image: 'https://images.unsplash.com/photo-1576961060910-bdf4ad55bb2a?w=300&h=300&fit=crop',
+    image: '/CALCIUM.webp',
     badge: 'New',
   },
   {
@@ -38,7 +38,7 @@ const medicines = [
     category: 'Vitamins',
     price: '$12.99',
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1587854692152-cbe660dbde0f?w=300&h=300&fit=crop',
+    image: '/r1.webp',
     badge: 'Featured',
   },
   {
@@ -47,7 +47,7 @@ const medicines = [
     category: 'Supplements',
     price: '$14.99',
     rating: 4.9,
-    image: 'https://images.unsplash.com/photo-1599599810694-b5ac4dd4b9e9?w=300&h=300&fit=crop',
+    image: '/OMEGA.jpg',
     badge: 'Hot Deal',
   },
   {
@@ -56,7 +56,7 @@ const medicines = [
     category: 'Digestive Health',
     price: '$16.99',
     rating: 4.8,
-    image: 'https://images.unsplash.com/photo-1517836357463-d25ddfcbf042?w=300&h=300&fit=crop',
+    image: '/r2.webp',
     badge: 'Trending',
   },
 ];

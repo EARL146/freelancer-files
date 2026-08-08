@@ -75,7 +75,7 @@ export const Navigation = () => {
             <div className="w-10 h-10 bg-gradient-to-br from-emerald-500 to-blue-500 rounded-lg flex items-center justify-center">
               <span className="text-xl font-bold text-white">💊</span>
             </div>
-            <span className="font-poppins font-bold text-xl text-gray-900 dark:text-white">
+            <span className={`font-poppins font-bold text-xl ${isScrolled ? 'text-gray-900 dark:text-white' : 'text-white'}`}>
               PharmaCare
             </span>
           </motion.div>
@@ -87,7 +87,7 @@ export const Navigation = () => {
                 key={item.label}
                 href={item.href}
                 whileHover={{ color: '#10b981' }}
-                className="text-gray-700 dark:text-gray-300 font-medium transition-colors text-sm"
+                className={`font-medium transition-colors text-sm ${isScrolled ? 'text-gray-700 dark:text-gray-300' : 'text-white'}`}
               >
                 {item.label}
               </motion.a>
@@ -105,7 +105,7 @@ export const Navigation = () => {
               {isDark ? (
                 <Sun size={20} className="text-yellow-500" />
               ) : (
-                <Moon size={20} className="text-gray-700" />
+                <Moon size={20} className={isScrolled ? 'text-gray-700' : 'text-white'} />
               )}
             </motion.button>
 
@@ -114,7 +114,7 @@ export const Navigation = () => {
               whileTap={{ scale: 0.95 }}
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors"
             >
-              <Search size={20} className="text-gray-700 dark:text-gray-300" />
+              <Search size={20} className={isScrolled ? 'text-gray-700 dark:text-gray-300' : 'text-white'} />
             </motion.button>
 
             <motion.button
@@ -122,14 +122,14 @@ export const Navigation = () => {
               whileTap={{ scale: 0.95 }}
               className="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-slate-700 transition-colors relative"
             >
-              <ShoppingCart size={20} className="text-gray-700 dark:text-gray-300" />
+              <ShoppingCart size={20} className={isScrolled ? 'text-gray-700 dark:text-gray-300' : 'text-white'} />
               <span className="absolute top-1 right-1 w-2 h-2 bg-emerald-500 rounded-full"></span>
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="px-4 py-2 rounded-lg border border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 font-medium hover:bg-gray-50 dark:hover:bg-slate-700 transition-colors flex items-center gap-2"
+              className={`px-4 py-2 rounded-lg border font-medium transition-colors flex items-center gap-2 ${isScrolled ? 'border-gray-300 dark:border-slate-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-slate-700' : 'border-white/50 text-white hover:bg-white/10'}`}
             >
               <LogIn size={16} />
               Login
