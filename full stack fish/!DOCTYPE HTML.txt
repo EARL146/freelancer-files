@@ -1,9 +1,0 @@
-<!DOCTYPE HTML>
-<head>
-<title>1.0</title>
-</head>
-<body>
-<div class="center">
-<h1>HELLO WORLD</h1>
-</div>
-</html>
